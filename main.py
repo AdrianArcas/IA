@@ -36,9 +36,9 @@ class Zone:
 
 
 # Create zones with different centers and spreads
-blue_zone = Zone(180, 220, 50, 50, 3333, noise_ratio=0.1)
-red_zone = Zone(-100, 110, 75, 50, 3333, noise_ratio=0.1)
-yellow_zone = Zone(210, -150, 25, 100, 3333, noise_ratio=0.1)
+blue_zone = Zone(180, 220, 50, 50, 3333)
+red_zone = Zone(-100, 110, 75, 50, 3333)
+yellow_zone = Zone(210, -150, 25, 100, 3333)
 
 # Generate the scatter plot
 for zone, color in zip([blue_zone, red_zone, yellow_zone], ['b', 'r', 'y']):
