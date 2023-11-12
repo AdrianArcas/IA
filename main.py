@@ -73,7 +73,7 @@ def draw_plot():
     plt.draw()
 
 
-def calculate_point_color_from_nearest_centroid():
+def color_points_with_color_from_nearest_centroid():
     for point in all_points:
         mix_dist = 99999
         closest_centroid = None
@@ -84,24 +84,33 @@ def calculate_point_color_from_nearest_centroid():
                 closest_centroid = centroid
         point.color = closest_centroid.color
 
-def calculate_centroid_position_from_wheight_center():
+
+def move_centroid_position_to_weight_center():
     for centroid in all_centroids:
-        average_x = 0,
-        average_y = 0
+        x_values = []
+        y_values = []
         for point in all_points:
             if centroid.color == point.color:
-               #TODO Calculaate average of x, y and centroid (x,y)
+                x_values.append(point.x)
+                y_values.append(point.y)
+        if len(x_values) != 0 or len(y_values) != 0:
+            centroid.x = sum(x_values) / len(x_values)
+            centroid.y = sum(y_values) / len(y_values)
 
 
-
-def calc_euclidian_distance(point, ce   ntroid):
+def calc_euclidian_distance(point, centroid):
     return math.sqrt((point.x - centroid.x) ** 2 + (point.y - centroid.y) ** 2)
 
 
-def k_mean_callback(event):
+def color_points(event):
     points_plot.cla()
-    calculate_point_color_from_nearest_centroid()
-    calculate_centroid_position_from_wheight_center()
+    color_points_with_color_from_nearest_centroid()
+    draw_plot()
+
+
+def move_centroids(event):
+    points_plot.cla()
+    move_centroid_position_to_weight_center()
     draw_plot()
 
 
@@ -121,8 +130,12 @@ all_points = generate_points(zones)
 draw_plot()
 
 axes = plt.axes([0.0, 0.0, 0.1, 0.05])
-k_mean_button = Button(axes, 'K mean')
-k_mean_button.on_clicked(k_mean_callback)
+k_mean_button = Button(axes, 'Color points')
+k_mean_button.on_clicked(color_points)
+
+axes = plt.axes([0.1, 0.0, 0.1, 0.05])
+move_centroids_button = Button(axes, 'Move centroids')
+move_centroids_button.on_clicked(move_centroids)
 
 # Show the plot on the screen
 plt.show()
